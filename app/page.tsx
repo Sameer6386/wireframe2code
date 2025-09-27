@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Authentication from "./_components/Authentication";
 import ProfileAvatar from "./_components/ProfileAvatar";
 import { useAuthContext } from "./provider";
 
@@ -29,17 +28,11 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end sm:ps-7">
             {!user?.email ? (
-              <Authentication>
-                <div className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-gray-50">
-                  <Image
-                    src="/google.png"
-                    alt="Google"
-                    width={20}
-                    height={20}
-                  />
-                  <span>Sign in with Google</span>
+              <Link href="/auth">
+                <div className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-gray-50 transition-colors">
+                  <span>Sign in</span>
                 </div>
-              </Authentication>
+              </Link>
             ) : (
               <ProfileAvatar />
             )}
@@ -115,11 +108,11 @@ export default function Home() {
                 </svg>
               </Link>
             ) : (
-              <Authentication>
-                <div className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 py-3 px-4 dark:focus:ring-offset-gray-800">
+              <Link href="/auth">
+                <div className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 py-3 px-4 dark:focus:ring-offset-gray-800 transition-all duration-200">
                   Get Started
                 </div>
-              </Authentication>
+              </Link>
             )}
           </div>
         </div>
