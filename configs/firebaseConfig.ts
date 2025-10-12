@@ -1,9 +1,8 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
-import { getAnalytics, isSupported } from 'firebase/analytics';
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
+import { getStorage, FirebaseStorage } from 'firebase/storage';
+import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyBLkgazmIxBL7tDWe-ePaZNj-MWYxmJPw0',
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'rising-cable-395702.firebaseapp.com',
@@ -14,29 +13,24 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-X4RFX1P8VS'
 };
 
-let app = null;
-let auth = null;
-let storage = null;
-let analytics = null;
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let storage: FirebaseStorage | null = null;
+let analytics: Analytics | null = null;
 
 try {
-  // Initialize Firebase only if it hasn't been initialized
   app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-
-  // Initialize services
   auth = getAuth(app);
   storage = getStorage(app);
 
-  // Initialize Analytics only in browser environment
   if (typeof window !== 'undefined') {
     isSupported().then(yes => {
-      if (yes) {
+      if (yes && app) {
         analytics = getAnalytics(app);
       }
     });
   }
 
-  // Configure auth settings
   if (auth) {
     auth.useDeviceLanguage();
   }

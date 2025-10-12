@@ -21,6 +21,11 @@ function ProfileAvatar() {
 
   const handleSignOut = async () => {
     try {
+      if (!auth) {
+        toast.error("Authentication not initialized");
+        return;
+      }
+
       setIsLoading(true);
       await signOut(auth);
       router.replace("/");

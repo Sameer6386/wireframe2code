@@ -76,6 +76,11 @@ function ImageUpload() {
         return;
       }
 
+      if (!storage) {
+        toast.error("Storage not initialized");
+        return;
+      }
+
       setLoading(true);
       const fileName = `${Date.now()}.${fileState.file.name.split(".").pop()}`;
       const imageRef = ref(storage, `Wireframe_To_Code/${fileName}`);

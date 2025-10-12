@@ -25,7 +25,13 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Optimize auth state changes
+    if (!auth) {
+      console.error("Auth not initialized");
+      setLoading(false);
+      setMounted(true);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(
       auth,
       (user) => {

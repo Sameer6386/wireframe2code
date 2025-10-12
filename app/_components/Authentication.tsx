@@ -15,8 +15,12 @@ function Authentication({ children }: AuthenticationProps) {
 
   const onButtonPress = async () => {
     try {
+      if (!auth) {
+        toast.error("Authentication not initialized");
+        return;
+      }
+
       setIsLoading(true);
-      // Configure Google Auth Provider
       provider.setCustomParameters({
         prompt: "select_account",
       });
@@ -36,7 +40,6 @@ function Authentication({ children }: AuthenticationProps) {
           toast.error("Please allow popups for this website");
           break;
         case "auth/cancelled-popup-request":
-          // User closed the popup, no need to show error
           break;
         default:
           toast.error("Failed to sign in. Please try again.");

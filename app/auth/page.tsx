@@ -50,6 +50,11 @@ export default function AuthPage() {
 
   const handleGoogleAuth = async () => {
     try {
+      if (!auth) {
+        toast.error("Authentication not initialized");
+        return;
+      }
+
       setLoading(true);
       provider.setCustomParameters({
         prompt: "select_account",
@@ -90,8 +95,13 @@ export default function AuthPage() {
     }
 
     try {
+      if (!auth) {
+        toast.error("Authentication not initialized");
+        return;
+      }
+
       setLoading(true);
-      
+
       if (isLogin) {
         await signInWithEmailAndPassword(auth, formData.email, formData.password);
         toast.success("Successfully signed in!");
